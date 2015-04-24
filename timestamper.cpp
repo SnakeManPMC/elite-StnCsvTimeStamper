@@ -33,9 +33,12 @@ void TimeStamper::RunMe(int argc, char *argv[])
 	}
 	QTextStream in(&file);
 
+	QDateTime date = QDateTime::currentDateTimeUtc();
+	QString utctime = date.toString("yyyy-MM-dd HH:mm:ss");
+
 	QString timestampedcsv;
 	timestampedcsv = argv[1];
-	timestampedcsv.append("_TimeStamped.csv");
+	timestampedcsv.append(date.toString("yyyy-MM-dd_HH:mm:ss.csv"));
 	QFile stampedfile(timestampedcsv);
 	if (!stampedfile.open(QIODevice::WriteOnly | QIODevice::Text))
 	{
@@ -49,9 +52,6 @@ void TimeStamper::RunMe(int argc, char *argv[])
 	// header
 	line = in.readLine();
 	stamped << line << "\n";
-
-	QDateTime date = QDateTime::currentDateTimeUtc();
-	QString utctime = date.toString("yyyy-MM-dd HH:mm:ss");
 
 	while (!in.atEnd())
 	{
